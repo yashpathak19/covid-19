@@ -79,19 +79,18 @@ function getData($date=false, $country=false, $getcountries=false){
             <div class="jumbotron text-center mb-0">
                 <h1>Covid 19 Stats</h1>
                 <p>Live status of Covid19 Cases, subscribe us for the updates!</p> 
-                <div class="g-signin2 mt-0" id="signinbutton" data-onsuccess="onSignIn" data-theme="dark"></div>
-                <div id="logoutbutton" style="display:none;">
+                <!-- code ref: https://developers.google.com/identity/sign-in/web/sign-in-->
+                <div class="g-signin2" id="signinbutton" data-onsuccess="onSignIn" data-theme="dark"></div>
+                <!-- google sign in actually doesn't sign out the user completely-->
+                <!-- <div id="logoutbutton" style="display:none;">
                     <div class="g-signin2" style="display:none;" data-cookiepolicy='single_host_origin' data-onsuccess="onSignIn"></div>
                     <button class="btn btn-danger" onclick="logOut()">Sign out</button>
-                </div>
+                </div> -->
             </div>
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="myprofile.html">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="myprofile.html">My Profile</a>
                     </li>
                 </ul>
             </nav>
@@ -119,6 +118,13 @@ function getData($date=false, $country=false, $getcountries=false){
             <form action="index.php" mehod="post">
                 <button type="submit" name="viewall" class="btn btn-success">View all country data (Recent)</button> 
             </form>
+            <div id="email-subscription" class="mt-3">
+                <form action="email.php" method="post">
+                    <input type="hidden" id="email" name="email">
+                    <input type="hidden" id="username" name="username">
+                    <button type="submit" name="emailuser" class="btn btn-warning">Subscribe</button> 
+                </form>
+            </div>
         </div>
         <!-- chart future implementation -->
         <!-- <div class="container" id="chartContainer"></div> -->
@@ -168,7 +174,8 @@ function getData($date=false, $country=false, $getcountries=false){
         </div>
         <footer>
         <div class="jumbotron text-center mb-0">
-            <p>Footer</p>
+            <strong>Covid-19 Stats</strong>
+            <p>Copyright Yash Pathak</p>
         </div>
         </footer>
     <!-- Bootstrap 4 Scripts -->
