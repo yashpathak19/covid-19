@@ -6,6 +6,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 if (isset($_POST['email']) && isset($_POST['username'])){
     $email = $_POST['email'];
+    $name = $_POST['username'];
 }
 
 //Load Composer's autoloader
@@ -32,18 +33,31 @@ try {
     );
     //Recipients
     $mail->setFrom('thisemailisjustformyapp@gmail.com', 'Mailer');
-    $mail->addAddress('yashpathak339@gmail.com', 'Joe User');     // Add a recipient
+    $mail->addAddress($email, $name);     // Add a recipient
 
 
 
     //Content
     $mail->isHTML(true);                                  // Set email format to HTML
-    $mail->Subject = 'Here is the subject';
-    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+    $mail->Subject = 'Thanks for subscription';
+    $mail->Body    = 'Thank you for subscribing to covid19 Updates, ' . $name!;
+    $mail->AltBody = 'Thank you for subscribing to covid19 Updates, ' . $name!;
 
     $mail->send();
-    echo 'Message has been sent';
+    echo '<div class="alert alert-success">
+            <strong>Success!</strong> You have successfully subscribed!.
+         </div>';
 } catch (Exception $e) {
     echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
 }
+?>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+</html>

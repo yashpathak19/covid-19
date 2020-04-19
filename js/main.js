@@ -71,18 +71,19 @@ var options = {
   }
   };
 
-  function onSignIn(googleUser) {
+function onSignIn(googleUser) {
     // getting user details
     var profile = googleUser.getBasicProfile();
     // setting values
-    document.getElementById("logoutbutton").style.display = "block";
+    document.getElementById("email").value = profile.getEmail();
+    document.getElementById("username").value = profile.getName();
 }
 
 //log out button
-function logOut() {
-    var user = gapi.auth2.getAuthInstance();
-    user.signOut();
-    //hiding the fields of name, email and image
-    document.getElementById("logoutbutton").style.display = "none";
-}
+// function logOut() {
+//     var user = gapi.auth2.getAuthInstance();
+//     user.signOut();
+//     //hiding the fields of name, email and image
+//     document.getElementById("logoutbutton").style.display = "none";
+// }
 

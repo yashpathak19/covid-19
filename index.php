@@ -62,7 +62,6 @@ function getData($date=false, $country=false, $getcountries=false){
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <!-- Meta Tags for Bootstrap 4 -->
     <meta charset="utf-8">
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="758045501364-o30v76lc7lsk9dp3fg8h7toonhnvbpka.apps.googleusercontent.com">
@@ -122,7 +121,7 @@ function getData($date=false, $country=false, $getcountries=false){
                 <form action="email.php" method="post">
                     <input type="hidden" id="email" name="email">
                     <input type="hidden" id="username" name="username">
-                    <button type="submit" name="emailuser" class="btn btn-warning">Subscribe</button> 
+                    <button type="submit" name="emailuser" class="btn btn-warning">Email Subscription for Updates</button> 
                 </form>
             </div>
         </div>
