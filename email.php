@@ -4,6 +4,7 @@
 // code ref: inclass example
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+$email = $name = false;
 if (isset($_POST['email']) && isset($_POST['username'])){
     $email = $_POST['email'];
     $name = $_POST['username'];
@@ -40,15 +41,18 @@ try {
     //Content
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = 'Thanks for subscription';
-    $mail->Body    = 'Thank you for subscribing to covid19 Updates, ' . $name!;
-    $mail->AltBody = 'Thank you for subscribing to covid19 Updates, ' . $name!;
-
-    $mail->send();
+    $mail->Body    = 'Thank you for subscribing to covid19 Updates, ' . $name;
+    $mail->AltBody = 'Thank you for subscribing to covid19 Updates, ' . $name;
+    if ($email && $name){
+        $mail->send();
+    }
     echo '<div class="alert alert-success">
             <strong>Success!</strong> You have successfully subscribed!.
          </div>';
 } catch (Exception $e) {
-    echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+    echo "<div class='alert alert-danger'>
+            <strong>Error!</strong> Message could not be sent, Please sign in, in order to get email updates. Mailer Error:  $mail->ErrorInfo;
+        </div>";
 }
 ?>
 <!DOCTYPE html>

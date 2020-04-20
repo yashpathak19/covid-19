@@ -3,45 +3,18 @@ $(document).ready( function () {
         "order": [[ 1, "desc" ]]
     }
     );
-    // $("body").on("click", "#main-table td", function () {
-    //     $country = $(this).text();
-    //     $.ajax({
-    //         type: "POST",
-    //         url: 'getChartDetails.php',
-    //         data: {country: $country},
-    //         success: function(data){
-    //             alert(data);
-    //         }
-    //     });
-    // });
-    $.getJSON('getChartDetails.php', function(data){
-        var notification = "";
-        $.each(data, function(index, notificationobj){
-            console.log(notificationobj[index])
-            // getting notification as per the type comment or like
-            // if (notificationobj.comment == null){
-            //     notification += "<div class='card bg-dark text-white'><div class='card-body'>" + notificationobj.first_name + " liked your \"" +
-            //     notificationobj.title + "\" recipe on " + notificationobj.posted_date + "</div></div>";
-            // }
-            // else {
-            //     notification += "<div class='card bg-secondary text-white'><div class='card-body'>" + notificationobj.first_name + " commented \"" +
-            //     notificationobj.comment + "\" on your recipe \"" + notificationobj.title + "\" on "+ notificationobj.posted_date + "</div></div>";
-            // }
-        })
-        // if (notification !== ""){
-        //     $('#modal-body').html(notification);
-        //     $("#myModal").modal();
-        // }
-    })
-    var chart = new ApexCharts(document.querySelector("#chartContainer"), options);
-    chart.render()
+    $("body").on("click", "#main-table td", function () {
+        document.getElementById("selectedCountry").innerText = $(this).text();
+        chartRenderApex($(this).text());
+    });
+    // var chart = new ApexCharts(document.querySelector("#chartContainer"), options);
+    // chart.render()
 } );
-
 
 var options = {
     series: [{
-      name: "Desktops",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+      name: "Affected People",
+      data: [],
   }],
     chart: {
     height: 350,
@@ -57,7 +30,7 @@ var options = {
     curve: 'straight'
   },
   title: {
-    text: 'Product Trends by Month',
+    text: 'Line Chart',
     align: 'left'
   },
   grid: {
@@ -67,9 +40,30 @@ var options = {
     },
   },
   xaxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    categories: [],
   }
   };
+function chartRenderApex(country="Canada") {
+  $.ajax({
+    url: "index.php?country=" + country,
+    type: "GET",
+    success: function(data){
+        options.series[0]['data'] = []; 
+        options.xaxis.categories = [];
+        $.each(JSON.parse(data), function(dateVal, caseVal){
+            options.series[0]['data'].push(caseVal); 
+            options.xaxis.categories.push(dateVal);
+        })
+    }
+    });
+    debugger
+    // options.series[0]['data'] = dates;
+    // options.xaxis.categories = totalCases;
+    document.getElementById("chartContainer").innerText = "";
+    var chart = new ApexCharts(document.querySelector("#chartContainer"), options);
+    chart.render()
+}
+chartRenderApex();
 
 function onSignIn(googleUser) {
     // getting user details

@@ -8,15 +8,38 @@ if(isset($_POST['dateChange'])){
     $datevalue = $_POST['dateValue'];
     $country = $_POST['country'];
     $selectedcountry = $_POST['country'];
+    echo "<script type='text/javascript'>chartRenderApex($country);</script>";
+;
 }
 if (isset($_POST['viewall'])){
     $date = false;
     $country = false;
 }
+if(isset($_GET['country'])){
+    $dates = ['2020-03-25', '2020-03-30', '2020-04-05', '2020-04-10', '2020-04-15'];
+    $values = [];
+    $counter = 0;
+    $history = [];
+    foreach ($dates as $adate){
+        foreach (getData($adate, $_GET['country'], false) as $key => $value){
+            $counter += 1;
+            // $values = [];
+            if ($counter > 1)
+            { 
+            //    $details = [$value['cases']['total'], $adate];
+            //    $values = [$value['cases']['total']];
+               $history[$adate] = $value['cases']['total'];
+            }
+        }
+    }
+    echo json_encode($history);
+    die;
+}
+
 $continents = ['All', 'Europe', 'North-america', 'Asia', 'Africa', 'North-america', 'South-america'];
 //this method has three parameters
 //if the method is called with date & country it will fetch the history
-//if the method is called with getall countries it will fetch the countries which is affected with CORONA virus.
+//if the method is called with getcountries it will fetch the countries which is affected with CORONA virus.
 //if the method is called with no paramters it fetches the current updates for all affected countries
 //api ref: https://rapidapi.com/api-sports/api/covid-193
 function getData($date=false, $country=false, $getcountries=false){
@@ -86,13 +109,14 @@ function getData($date=false, $country=false, $getcountries=false){
                     <button class="btn btn-danger" onclick="logOut()">Sign out</button>
                 </div> -->
             </div>
-            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <!-- to be implemented -->
+            <!-- <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="myprofile.html">My Profile</a>
                     </li>
                 </ul>
-            </nav>
+            </nav> -->
         </header>
         <main>
         <div class="container">
@@ -126,7 +150,10 @@ function getData($date=false, $country=false, $getcountries=false){
             </div>
         </div>
         <!-- chart future implementation -->
-        <!-- <div class="container" id="chartContainer"></div> -->
+        <div id="selectedCountry" class="alert alert-danger container mt-3">
+            <strong>Info!</strong> Select any country in the below table to view its Chart.
+        </div>
+        <div class="container" id="chartContainer"></div>
         <div class="container">
             <h2>Coronavirus world stats</h2>
             <table id="main-table" class="table table-striped table-bordered table-hover">
@@ -145,6 +172,7 @@ function getData($date=false, $country=false, $getcountries=false){
                 <tbody>
                     <?php
                         $count = 0;
+                        //counting as the api returns two values for single history call. Preventing with the count condition so it dosen't display two items for one
                         foreach (getData($date, $country, false) as $key => $value){
                             $count += 1;
                             if ((in_array($value['country'], $continents)) || ($count > 1 && $country))
@@ -177,15 +205,15 @@ function getData($date=false, $country=false, $getcountries=false){
             <p>Copyright Yash Pathak</p>
         </div>
         </footer>
-    <!-- Bootstrap 4 Scripts -->
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <!-- Script for sorting -->
         <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script src="js/main.js"></script>
-        <!-- <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script> -->
+        <!-- chart -->
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     </body>
 </html>
