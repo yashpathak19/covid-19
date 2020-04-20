@@ -17,9 +17,9 @@ Covid-19 https://rapidapi.com/api-sports/api/covid-193
 
 * Subscribe to Email Updates: Sign in using Gmail and subscribe to updates. Sends an email to the user's email account. (Future implementation cron job for automatically sending emails at the end of the day, everyday)
 
-*Line Chart: Uses Apexcharts to display historical data of a country in linear form. Select any country to view its line chart.
+* Line Chart: Uses Apexcharts to display historical data of a country in linear form. Select any country to view its line chart.
 
-*Responsive: The website is responsive and uses bootstrap4.
+* Responsive: The website is responsive and uses bootstrap4.
 
 
 
